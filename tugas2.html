@@ -60,6 +60,8 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'tugas2';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -366,6 +368,8 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menggunakan-k-nearest-neighbors-knn-dalam-analisis-data"><strong>Menggunakan K-Nearest Neighbors (KNN) dalam Analisis Data</strong></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-10-baris-2-kolom">contoh 10 baris 2 kolom</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-menghitung-manual-lof">CONTOH MENGHITUNG MANUAL LOF</a></li>
 </ul>
             </nav>
         </div>
@@ -879,7 +883,232 @@ Jika jumlah tetangga dalam radius tertentu sangat sedikit, maka besar kemungkina
 </div>
 </div>
 </div>
+<p>##apa itu LOF?</p>
+<p>Local Outlier Factor (LOF) adalah algoritma yang digunakan untuk mendeteksi outlier (pencilan), yaitu data yang memiliki perilaku atau karakteristik berbeda dari sebagian besar data lain dalam suatu dataset.</p>
+<p>##Bagaimana tahapannya LOF?</p>
+<p>Tahapan dalam Local Outlier Factor (LOF)</p>
+<p>1.Menentukan Jumlah Tetangga (k-nearest neighbors, k-NN)</p>
+<p>-Pilih jumlah tetangga (k) yang akan digunakan untuk membandingkan kepadatan * lokal suatu titik data.</p>
+<p>-Semakin besar k, semakin banyak titik yang dibandingkan, sehingga hasilnya lebih stabil tetapi bisa mengaburkan outlier kecil.</p>
+<p>##Bagaimana cara menghitung manual LOF</p>
+<p>1.Menentukan Tetangga Terdekat (k-NN)
+Kita menentukan berapa banyak tetangga (k) yang akan digunakan untuk membandingkan titik yang sedang diperiksa. Semakin banyak tetangga yang digunakan, semakin akurat hasilnya.</p>
+<p>2.Mengukur Seberapa Jauh Titik D dari Tetangganya
+Setelah menemukan tetangga terdekat, kita mengukur jarak antara D dan masing-masing tetangganya. Jarak ini membantu menentukan apakah D jauh dari kelompoknya atau berada di daerah yang padat.</p>
+<p>3.Membandingkan Kepadatan Titik D dengan Tetangganya</p>
+<p>-Jika titik D berada di area yang kepadatannya mirip dengan tetangganya, maka D
+tidak dianggap outlier.</p>
+<p>-Jika titik D berada di daerah dengan kepadatan lebih rendah dibanding tetangganya (artinya D lebih sendirian dibanding yang lain), maka D mungkin outlier.</p>
+<p>4.Menghitung Skor LOF
+Kita membandingkan kepadatan titik D dengan kepadatan titik-titik lain. Jika kepadatan D jauh lebih kecil dibanding tetangganya, maka nilai LOF tinggi, yang berarti D lebih mencurigakan sebagai outlier.</p>
+<p>-Jika nilai LOF mendekati 1 → D bukan outlier.</p>
+<p>-Jika nilai LOF lebih besar dari 1 → D mungkin outlier.</p>
+<p>-Jika nilai LOF jauh lebih besar dari 1 (misalnya lebih dari 2 atau 3) → D sangat mungkin outlier.</p>
 </section>
+</section>
+<section id="contoh-10-baris-2-kolom">
+<h2>contoh 10 baris 2 kolom<a class="headerlink" href="#contoh-10-baris-2-kolom" title="Link to this heading">#</a></h2>
+</section>
+<section id="contoh-menghitung-manual-lof">
+<h2>CONTOH MENGHITUNG MANUAL LOF<a class="headerlink" href="#contoh-menghitung-manual-lof" title="Link to this heading">#</a></h2>
+<p>Berikut adalah cara singkat menghitung <strong>Local Outlier Factor (LOF)</strong> untuk satu titik data dengan dua fitur:</p>
+<ol class="arabic simple">
+<li><p><strong>Dataset</strong>:<br />
+Misalkan data berikut:</p></li>
+</ol>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Feature1</p></th>
+<th class="head"><p>Feature2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>2.0</p></td>
+<td><p>3.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>3.0</p></td>
+<td><p>4.0</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>4.0</p></td>
+<td><p>5.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>5.0</p></td>
+<td><p>6.0</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>6.0</p></td>
+<td><p>7.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>7.0</p></td>
+<td><p>8.0</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>8.0</p></td>
+<td><p>9.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>9.0</p></td>
+<td><p>10.0</p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>10.0</p></td>
+<td><p>11.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>40.0</p></td>
+<td><p>40.0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Kita akan menghitung LOF untuk titik ke-10 (40.0, 40.0).</p>
+<ol class="arabic simple" start="2">
+<li><p><strong>Hitung Jarak Euclidean</strong>:<br />
+Jarak antara titik 10 dan titik lainnya:</p></li>
+</ol>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dari -&gt; ke</p></th>
+<th class="head"><p>Jarak Ecludian</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>10 -&gt; 1</p></td>
+<td><p>52.33</p></td>
+</tr>
+<tr class="row-odd"><td><p>10 -&gt; 2</p></td>
+<td><p>50.91</p></td>
+</tr>
+<tr class="row-even"><td><p>10 -&gt; 3</p></td>
+<td><p>49.50</p></td>
+</tr>
+<tr class="row-odd"><td><p>10 -&gt; 4</p></td>
+<td><p>48.08</p></td>
+</tr>
+<tr class="row-even"><td><p>10 -&gt; 5</p></td>
+<td><p>46.67</p></td>
+</tr>
+<tr class="row-odd"><td><p>10 -&gt; 6</p></td>
+<td><p>45.25</p></td>
+</tr>
+<tr class="row-even"><td><p>10 -&gt; 7</p></td>
+<td><p>43.84</p></td>
+</tr>
+<tr class="row-odd"><td><p>10 -&gt; 8</p></td>
+<td><p>42.42</p></td>
+</tr>
+<tr class="row-even"><td><p>10 -&gt; 9</p></td>
+<td><p>41.01</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol class="arabic simple" start="3">
+<li><p><strong>Tentukan k-Tetangga Terdekat</strong> (k=2):<br />
+Dua tetangga terdekat titik 10 adalah titik 9 dan 8.</p></li>
+<li><p><strong>Hitung Reachability Distance</strong>:<br />
+Karena k = 2, kita ambil 2 tetangga terdekat, yaitu titik 8 dan 9.
+Karena titik 10 jauh dari kelompok lainnya, maka reachability distance tinggi:</p></li>
+</ol>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dari -&gt; ke</p></th>
+<th class="head"><p>Jarak Ecludian</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>10 -&gt; 8</p></td>
+<td><p>42.42</p></td>
+</tr>
+<tr class="row-odd"><td><p>10 -&gt; 9</p></td>
+<td><p>41.01</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol class="arabic" start="5">
+<li><p><strong>Hitung Local Reachability Density (LRD)</strong>:<br />
+<span class="math notranslate nohighlight">\(
+\text{LRD}(10) = \frac{1}{\frac{1}{2} \times (42.42 + 41.01)} = 0.0239
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(\text{LRD}(8) = 0.095\)</span>
+<span class="math notranslate nohighlight">\(\text{LRD}(9) = 0.09\)</span></p>
+</li>
+<li><p><strong>Hitung LOF</strong>:<br />
+<span class="math notranslate nohighlight">\(
+\text{LOF}(3) = \frac{\frac{0.09}{0.0239} + \frac{0.095}{0.0239}}{2} = 3.87
+\)</span></p></li>
+<li><p><strong>Interpretasi</strong>:<br />
+Karena LOF(10) = 3.87, titik ke-10 sangat mungkin outlier.</p></li>
+</ol>
+<p>LOF mengukur seberapa terisolasi titik dibandingkan tetangganya. Titik dengan LOF lebih besar dari 1 dianggap outlier.</p>
+<p>##impelementasi pakek sklearn untuk contoh data saya</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">LocalOutlierFactor</span>
+
+<span class="c1"># Dataset contoh (10 baris, 2 fitur)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Feature1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">40.0</span><span class="p">],</span>
+    <span class="s1">&#39;Feature2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">,</span> <span class="mf">40.0</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># Membuat DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Inisialisasi model LOF dengan k=2 (2 tetangga terdekat)</span>
+<span class="n">lof</span> <span class="o">=</span> <span class="n">LocalOutlierFactor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Fit model LOF dan prediksi label (1 untuk normal, -1 untuk outlier)</span>
+<span class="n">lof_labels</span> <span class="o">=</span> <span class="n">lof</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># Menambahkan hasil prediksi ke DataFrame</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;LOF Label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lof_labels</span>
+
+<span class="c1"># Menampilkan hasil</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># Menampilkan jumlah outlier</span>
+<span class="n">num_outliers</span> <span class="o">=</span> <span class="p">(</span><span class="n">lof_labels</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah outlier: </span><span class="si">{</span><span class="n">num_outliers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Menampilkan data outlier</span>
+<span class="n">outliers</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;LOF Label&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Data Outlier:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">outliers</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   Feature1  Feature2  LOF Label
+0       2.0       3.0          1
+1       3.0       4.0          1
+2       4.0       5.0          1
+3       5.0       6.0          1
+4       6.0       7.0          1
+5       7.0       8.0          1
+6       8.0       9.0          1
+7       9.0      10.0          1
+8      10.0      11.0          1
+9      40.0      40.0         -1
+
+Jumlah outlier: 1
+
+Data Outlier:
+   Feature1  Feature2  LOF Label
+9      40.0      40.0         -1
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -943,6 +1172,8 @@ Jika jumlah tetangga dalam radius tertentu sangat sedikit, maka besar kemungkina
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menggunakan-k-nearest-neighbors-knn-dalam-analisis-data"><strong>Menggunakan K-Nearest Neighbors (KNN) dalam Analisis Data</strong></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-10-baris-2-kolom">contoh 10 baris 2 kolom</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-menghitung-manual-lof">CONTOH MENGHITUNG MANUAL LOF</a></li>
 </ul>
   </nav></div>
 
