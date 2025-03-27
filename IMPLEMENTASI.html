@@ -1631,6 +1631,22 @@ Iris-versicolor       1.00      1.00      1.00         9
 </div>
 </div>
 <p>##Implementasi Naive Bayes pada Data iris</p>
+<p>Naïve Bayes adalah sebuah algoritma klasifikasi yang berbasis pada Teorema Bayes dengan asumsi bahwa setiap fitur dalam data bersifat independen (naïve atau “naif”). Algoritma ini sering digunakan dalam berbagai aplikasi seperti klasifikasi teks, analisis sentimen dan deteksi spam.</p>
+<p>##cara hitung</p>
+<ol class="arabic simple">
+<li><p>Hitung Kemungkinan dalam Spam</p></li>
+</ol>
+<p>-Kata “Gratis” muncul 6 kali dalam 10 email spam → Peluangnya 6/10 = 60%</p>
+<p>-Kata “Hadiah” muncul 5 kali dalam 10 email spam → Peluangnya 5/10 = 50%</p>
+<p>-Estimasi probabilitas email ini Spam:</p>
+<p>-Ambil nilai tengah → Rata-rata (60% + 50%) ÷ 2 = 55% kemungkinan Spam</p>
+<ol class="arabic simple" start="2">
+<li><p>Hitung Kemungkinan dalam Bukan Spam</p></li>
+</ol>
+<p>-Kata “Gratis” muncul 2 kali dalam 10 email bukan spam → Peluangnya 2/10 = 20%</p>
+<p>-Kata “Hadiah” muncul 1 kali dalam 10 email bukan spam → Peluangnya 1/10 = 10%</p>
+<p>-Estimasi probabilitas email ini Bukan Spam:</p>
+<p>-Ambil nilai tengah → Rata-rata (20% + 10%) ÷ 2 = 15% kemungkinan Bukan Spam</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
@@ -1734,6 +1750,32 @@ Mislabeled points without outliers:
 <img alt="_images/05fd4252f69bee99e24091dc0c9619ba83362f4f579af1496a7199f10b65f63f.png" src="_images/05fd4252f69bee99e24091dc0c9619ba83362f4f579af1496a7199f10b65f63f.png" />
 </div>
 </div>
+<p>Kode di atas  bertujuan untuk membandingkan performa model Naïve Bayes pada data dengan dan tanpa outlier.</p>
+<p>1.Pemrosesan Data
+-Label Encoding: Label kelas dikonversi ke bentuk numerik menggunakan LabelEncoder agar bisa digunakan dalam model.</p>
+<p>-Pemilihan Fitur: Variabel fitur diambil dari feature_columns, sedangkan label target adalah “class_encoded”.</p>
+<p>-Penanganan Outlier:</p>
+<p>-Dataset dengan outlier: Menggunakan seluruh data (df_merged).</p>
+<p>-Dataset tanpa outlier: Menyaring hanya data yang bukan outlier (df_cleaned), dengan mempertahankan hanya data di mana “outlier” == 1.</p>
+<p>2.Pembagian Data
+Data dengan outlier dibagi menjadi training dan testing set menggunakan train_test_split (80% train, 20% test).</p>
+<p>Data tanpa outlier juga dibagi dengan cara yang sama.</p>
+<p>3.Training &amp; Prediksi dengan Gaussian Naïve Bayes
+Model GaussianNB dilatih pada kedua dataset:</p>
+<p>Model pertama dilatih dengan data yang mengandung outlier.</p>
+<p>Model kedua dilatih dengan data yang sudah dibersihkan dari outlier.</p>
+<p>Model kemudian memprediksi hasil pada data uji.</p>
+<p>4.Evaluasi Model
+Menghitung jumlah kesalahan prediksi (mislabeled points) pada kedua dataset.</p>
+<p>Akurasi dihitung menggunakan accuracy_score:</p>
+<p>Akurasi dengan outlier.</p>
+<p>Akurasi tanpa outlier.</p>
+<p>Menampilkan label yang salah diprediksi untuk melihat di mana model mengalami kesalahan.</p>
+<p>5.Visualisasi dengan Confusion Matrix
+Dua confusion matrix dibuat menggunakan seaborn.heatmap() untuk:</p>
+<p>Model dengan outlier.</p>
+<p>Model tanpa outlier.</p>
+<p>Confusion matrix membantu melihat bagaimana kesalahan prediksi terjadi antar kelas.</p>
 </section>
 
     <script type="text/x-thebe-config">
